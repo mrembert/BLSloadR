@@ -357,9 +357,6 @@ load_bls_dataset <- function(database_code, return_full = FALSE, simplify_table 
   }
   
   # STEP 3: Now join mapping files to the combined table
-  # Optimization: Convert to data.table for faster joins
-  full_dt <- data.table::as.data.table(full_dt)
-
   for (map_file in mapping_files) {
     if (map_file %in% names(downloads)) {
       tryCatch({
@@ -368,9 +365,6 @@ load_bls_dataset <- function(database_code, return_full = FALSE, simplify_table 
         # Remove unwanted columns from mapping file
         map_dt <- map_dt |> dplyr::select(-tidyselect::any_of(columns_to_remove))
         
-        # Ensure mapping file is also a data.table
-        map_dt <- data.table::as.data.table(map_dt)
-
         if (ncol(map_dt) == 2) {
           
           # For mapping files with exactly 2 columns, assume first is join column
@@ -378,8 +372,7 @@ load_bls_dataset <- function(database_code, return_full = FALSE, simplify_table 
           
           if (join_col %in% names(full_dt)) {
             if (!suppress_warnings) message("Joining mapping file ", map_file, " on column: ", join_col)
-            # Use data.table merge for performance
-            full_dt <- merge(full_dt, map_dt, by = join_col, all.x = TRUE, sort = FALSE)
+            full_dt <- left_join(full_dt, map_dt, by = join_col)
             processing_steps <- c(processing_steps, paste0("joined_mapping_", gsub("\\.", "_", map_file)))
           } else {
             if (!suppress_warnings) message("Skipping mapping file ", map_file, " - join column '", join_col, "' not found in data")
@@ -393,8 +386,7 @@ load_bls_dataset <- function(database_code, return_full = FALSE, simplify_table 
           
           if (length(join_cols) > 0) {
             if (!suppress_warnings) message("Joining mapping file ", map_file, " on column(s): ", paste(join_cols, collapse = ", "))
-            # Use data.table merge for performance
-            full_dt <- merge(full_dt, map_dt, by = join_cols, all.x = TRUE, sort = FALSE)
+            full_dt <- left_join(full_dt, map_dt, by = join_cols)
             processing_steps <- c(processing_steps, paste0("joined_mapping_", gsub("\\.", "_", map_file)))
           } else {
             if (!suppress_warnings) message("Skipping mapping file ", map_file, " - no join columns found in data")
@@ -407,9 +399,6 @@ load_bls_dataset <- function(database_code, return_full = FALSE, simplify_table 
       })
     }
   }
-
-  # Convert back to tibble as requested by user preference
-  full_dt <- dplyr::as_tibble(full_dt)
   
   # STEP 4: Apply table simplification if requested
   if (simplify_table) {
