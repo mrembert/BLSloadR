@@ -134,7 +134,7 @@ ces_monthly <- get_national_ces()
 #> Joining CES datasets...
 #> National CES data download complete!
 #> Dataset: Complete national CES dataset
-#> Final dataset dimensions: 7881789 x 14
+#> Final dataset dimensions: 7903827 x 14
 
 # Get only seasonally adjusted data (faster download)
 ces_seasonal <- get_national_ces(dataset_filter = "current_seasonally_adjusted")
@@ -142,7 +142,7 @@ ces_seasonal <- get_national_ces(dataset_filter = "current_seasonally_adjusted")
 #> Joining CES datasets...
 #> National CES data download complete!
 #> Dataset: Seasonally adjusted all-employee series
-#> Final dataset dimensions: 395621 x 14
+#> Final dataset dimensions: 396463 x 14
 
 # Get real earnings data for all employees
 ces_real_earnings <- get_national_ces(dataset_filter = "real_earnings_all_employees")
@@ -150,7 +150,7 @@ ces_real_earnings <- get_national_ces(dataset_filter = "real_earnings_all_employ
 #> Joining CES datasets...
 #> National CES data download complete!
 #> Dataset: Real earnings for all employees
-#> Final dataset dimensions: 522800 x 14
+#> Final dataset dimensions: 524996 x 14
 
 # Get all data including annual averages with full metadata
 ces_full <- get_national_ces(dataset_filter = "all_data",
@@ -159,22 +159,76 @@ ces_full <- get_national_ces(dataset_filter = "all_data",
 #> Joining CES datasets...
 #> National CES data download complete!
 #> Dataset: Complete national CES dataset
-#> Final dataset dimensions: 8205648 x 23
+#> Final dataset dimensions: 8227688 x 23
 
 # Get data with warnings and diagnostic information displayed
 ces_with_warnings <- get_national_ces(suppress_warnings = FALSE)
 #> Downloading national CES datasets (Complete national CES dataset)...
 #> Downloadingdata...
+#> Initial data dimensions:10000x5 (sampled)
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:57
+#> Number of tab-separated fields:5
+#> Header names:'series_id', 'year', 'period', 'value', 'footnote_codes'
+#> Final data dimensions:8227688x5 in https://download.bls.gov/pub/time.series/ce/ce.data.0.AllCESSeries
+#> Final column names:series_id, year, period, value, footnote_codes
 #> Downloadingseries...
+#> Initial data dimensions:22049x11
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:144
+#> Number of tab-separated fields:11
+#> Header names:'series_id', 'supersector_code', 'industry_code', 'data_type_code', 'seasonal', 'series_title', 'footnote_codes', 'begin_year', 'begin_period', 'end_year', 'end_period'
+#> Final data dimensions:22049x11 in https://download.bls.gov/pub/time.series/ce/ce.series
+#> Final column names:series_id, supersector_code, industry_code, data_type_code, seasonal, series_title, footnote_codes, begin_year, begin_period, end_year, end_period
 #> Downloadingindustry...
+#> Initial data dimensions:850x7
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:95
+#> Number of tab-separated fields:7
+#> Header names:'industry_code', 'naics_code', 'publishing_status', 'industry_name', 'display_level', 'selectable', 'sort_sequence'
+#> Final data dimensions:850x7 in https://download.bls.gov/pub/time.series/ce/ce.industry
+#> Final column names:industry_code, naics_code, publishing_status, industry_name, display_level, selectable, sort_sequence
 #> Downloadingperiod...
+#> Initial data dimensions:13x3
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:15
+#> Number of tab-separated fields:3
+#> Header names:'period', 'mm', 'month'
+#> Final data dimensions:13x3 in https://download.bls.gov/pub/time.series/ce/ce.period
+#> Final column names:period, mm, month
 #> Downloadingdatatype...
+#> Initial data dimensions:41x2
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:29
+#> Number of tab-separated fields:2
+#> Header names:'data_type_code', 'data_type_text'
+#> Final data dimensions:41x2 in https://download.bls.gov/pub/time.series/ce/ce.datatype
+#> Final column names:data_type_code, data_type_text
 #> Downloadingsupersector...
+#> Initial data dimensions:22x2
+#> Phantom columns detected:0
+#> No phantom columns detected, using original data
+#> Header parsing debug:
+#> Raw header line length:33
+#> Number of tab-separated fields:2
+#> Header names:'supersector_code', 'supersector_name'
+#> Final data dimensions:22x2 in https://download.bls.gov/pub/time.series/ce/ce.supersector
+#> Final column names:supersector_code, supersector_name
 #> Joining CES datasets...
 #> No warnings forNational CES: Complete national CES datasetdata download
 #> National CES data download complete!
 #> Dataset: Complete national CES dataset
-#> Final dataset dimensions: 7881789 x 14
+#> Final dataset dimensions: 7903827 x 14
 
 # Get full diagnostic object if needed
 data_with_diagnostics <- get_national_ces(return_diagnostics = TRUE)
@@ -182,7 +236,7 @@ data_with_diagnostics <- get_national_ces(return_diagnostics = TRUE)
 #> Joining CES datasets...
 #> National CES data download complete!
 #> Dataset: Complete national CES dataset
-#> Final dataset dimensions: 7881789 x 14
+#> Final dataset dimensions: 7903827 x 14
 print_bls_warnings(data_with_diagnostics)
 #> No warnings forNational CES: Complete national CES datasetdata download
 # }
